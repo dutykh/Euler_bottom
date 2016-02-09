@@ -1,6 +1,8 @@
 # Full Euler solver
 
-The present Matlab code is an implementation of the full Euler equations solver based on the method of conformal variables. The pecularity here is that the solver works on general (but smooth) bottoms. The method is described in the reference given below.
+The present Matlab code is an implementation of the full Euler equations solver based on the method of conformal variables. The pecularity here is that the solver works on general (but smooth) bottoms. The method is described in the reference given below. In a few words it is a Fourier-type pseudo-spectral solver. Standard Matlab time stepper is used to advance the solution in time. The solution is expected to be spectrally accurate. See the code to set the appropriate error tolerance parameters.
+
+Any comments/suggestions/bug reports are welcome!
 
 ![Snapshot](pics/InitialSnapshot.png)
 
