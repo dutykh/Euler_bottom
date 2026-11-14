@@ -2,7 +2,7 @@
 %%% Pseudo-spectral solver for full Euler equations    %%%
 %%% Test-case: wave packet interaction with a step     %%%
 %%% -------------------------------------------------- %%%
-%%% Last modified: 09/02/2016                          %%%
+%%% Last modified: 14/11/2026                          %%%
 %%% -------------------------------------------------- %%%
 %%% Author: Denys Dutykh, CNRS -- LAMA, Univ of Savoie %%%
 %%% E-mail: Denys.Dutykh@univ-savoie.fr                %%%
@@ -78,9 +78,9 @@ set(FigHandle, 'Renderer', 'zbuffer');
 set(FigHandle, 'Position', [900, 184, 1020, 990]);
 Plot(v, t);
 
-while (t <= Tf) % the loop in time
+while (t < Tf) % the loop in time
     [~, V] = ode113(@RHS, [0, dtw], v, options);
     v      = V(end,:).';
-    Plot(v, t);
     t      = t + dtw;
+    Plot(v, t);
 end % while ()
