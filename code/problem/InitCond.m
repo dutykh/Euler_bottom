@@ -1,7 +1,7 @@
 %%% -------------------------------------------------- %%%
 %%% Initial condition for the full Euler equations     %%%
 %%% -------------------------------------------------- %%%
-%%% Last modified: 09/02/2016                          %%%
+%%% Last modified: 14/11/2026                          %%%
 %%% -------------------------------------------------- %%%
 %%% Author: Denys Dutykh, CNRS -- LAMA, Univ of Savoie %%%
 %%% E-mail: Denys.Dutykh@univ-savoie.fr                %%%
@@ -25,8 +25,16 @@ function v = InitCond ()
     eta0 = FS(x0(Nvec));
     while (err > tol)
         eta  = [eta0; fliplr(eta0)];
-        xb   = x_bot(eta, b(x0));
-        xf   = x(eta, b(xb));
+        % the bed under this surface, by the iteration of RHS:
+        errb = inf;
+        h    = b(xi);
+        while (errb > tol)
+            xb   = x_bot(eta, h);
+            hn   = b(xb);
+            errb = norm(hn - h, inf);
+            h    = hn;
+        end % while ()
+        xf   = x(eta, h);
         eta1 = FS(xf(Nvec));
         err  = norm(eta1 - eta0, inf);
         x0   = xf;
