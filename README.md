@@ -66,8 +66,8 @@ x_ξ = 1 − ∂_ξ(𝒞γ + 𝒮h),        J = x_ξ² + γ_ξ²,
 in which ψ is the stream function on the free surface, J the squared modulus of Z_w on the surface, and u the
 tangential velocity with which the labels slide along it, common to the elevation and the potential. The constant q(t)
 fixes the horizontal origin x₀ of the map. The code holds the bed point of the anchor label ξ* = −L + L/N, half-way
-between the last and the first of the N labels, at x = −L, which requires q = (𝒮f)(ξ*). Each term of the two
-evolution equations has the dimension of a velocity and of a velocity squared, respectively.
+between the first of the N labels and the last one carried a period back, at x = −L, which requires q = (𝒮f)(ξ*).
+Each term of the two evolution equations has the dimension of a velocity and of a velocity squared, respectively.
 
 ## The method
 
@@ -82,7 +82,10 @@ relative and absolute tolerances 10⁻¹⁰.
 The function `b.m` returns the depth at the bed points of the first half of the labels and gives the second half their
 mirror image, and the initial condition is mirrored in the same way. The computed motion is therefore symmetric about
 the middle of the domain, x = 0, and also about its ends, which are images of each other by periodicity: the first half
-of the domain is a basin of length L closed by two vertical walls.
+of the domain is a basin of length L closed by two vertical walls. This construction of the bed holds for mirror-symmetric
+states only: for an initial state without the symmetry, `b.m` must give the depth at every bed point, since the bed points
+of the labels j and N + 1 − j are then no longer mirror images (for the packet of the example without its mirror image,
+they miss by up to 0.32 m, and the depth by up to 1.5 cm).
 
 ## The example
 
@@ -101,7 +104,7 @@ frame every 10 s.
 In the corrected run the packet travels from 2500.0 m to 3988.6 m in 200 s, at 7.443 m/s between 30 and 180 s. Linear
 theory gives the group speed 7.4215 m/s at the carrier wavenumber over 50 m of water, and 7.438 m/s when it is averaged
 with the energy spectrum of the packet. Over the run the mass (the integral of η) is conserved to 4 × 10⁻⁸ m² and the
-energy to 3 × 10⁻⁸ in relative terms, and the mirror symmetry is kept to 7 × 10⁻¹¹, the level of the rounding errors.
+energy to 3 × 10⁻⁸ in relative terms, and the mirror symmetry is kept to about 10⁻¹⁰, the level of the rounding errors.
 At t = 200 s the front of the packet reaches the foot of the step; a larger final time `Tf` in `runEuler.m` lets it cross.
 
 ## Quick start
@@ -191,10 +194,11 @@ map reproduces an exact conformal map with a non-flat bed to 1.8 × 10⁻¹⁵ (
 
 **The constant of the tangential velocity** (`code/methods/RHS.m`, `anchor.m`). The constant q(t) fixes the horizontal
 origin of the map. Version 1.0 took the value that the article prescribes, which has the wrong sign: with it the mean
-origin drifts at the speed 2q instead of staying still. Moreover the code does not keep the mean origin still but a bed
-point, from which `b.m` builds the bed. Version 2.0.0 takes the value that holds that bed point still, q = (𝒮f)(ξ*), so
-that the motion of the labels and the reconstruction of the bed use the same origin. For the mirror-symmetric motions of
-the example this value vanishes, and the anchored bed point stays still by symmetry.
+origin drifts at the speed 2q instead of staying still. Moreover the code does not keep the mean origin still but the bed
+point of one label, from which `b.m` builds the bed: the first label in version 1.0, and in version 2.0.0 the anchor
+label ξ*. Version 2.0.0 takes the value that holds that bed point still, q = (𝒮f)(ξ*), so that the motion of the labels
+and the reconstruction of the bed use the same origin. For the mirror-symmetric motions of the example this value
+vanishes, and the anchored bed point stays still by symmetry.
 
 **One origin for the surface and the bed** (`code/methods/x.m`). The function `x.m` placed the surface point of the
 first label at x = −L, while `x_bot.m` placed the bed point of that label there, and the two points are not above one
@@ -227,8 +231,8 @@ image of the first, the bed goes smoothly from 50 m to 25 m and back to 50 m (th
 neighbouring labels is 0.35 m, within the steps), and the mirrored packet travels the other way. The mirror points of the
 grid lie half-way between labels, so the map is anchored at the label ξ* = −L + L/N, one of them (`anchor.m`). The
 right-hand side of a mirror-symmetric state is then symmetric to 2 × 10⁻¹⁵, and over the 200 s of the example the
-motion departs from the symmetry by at most 7 × 10⁻¹¹, the accumulated rounding errors; anchored at the first label, as
-before, it departed by 2 × 10⁻⁶ within 20 s.
+motion departs from the symmetry by about 10⁻¹⁰, the accumulated rounding errors, whose size varies from run to run;
+anchored at the first label, as before, it departed by 2 × 10⁻⁶ within 20 s and by 10⁻³ within 120 s.
 
 ![Frequency error of exact steady waves for versions 1.0 and 2.0.0](docs/figures/corrections-frequency.png)
 
