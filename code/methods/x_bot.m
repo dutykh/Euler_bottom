@@ -29,7 +29,10 @@ function xb = x_bot (eta, h)
     
     % h is the depth, so the bed elevation entering the map is -h:
     xb      = xi - real(ifft(T1.*eta_hat - T2.*h_hat));
-    %%% Remove the drift and put back into the box:
-    xb      = xb - xb(1) - L;
+    %%% Remove the drift and put back into the box: the bed point of
+    %%% the anchor label (see anchor.m) is held at x = -L:
+    [s, w]  = anchor();
+    xs      = xi(1) + s - real(sum((T1.*eta_hat - T2.*h_hat).*w))/N;
+    xb      = xb - xs - L;
     
 end % x_bot ()

@@ -53,10 +53,12 @@ function rhs = RHS (~, v)
     % The tangential velocity of the conformal parametrization is TpsiJ - q,
     % the same for the elevation and the potential. The bed point of label
     % xi moves with horizontal velocity (S*psixJ - q) times d(xb)/dxi, with
-    % S the multiplier i csch(k h0); this q holds the bed point of label
-    % xi(1) at x = -L, where x_bot puts it and from where b builds the bed.
+    % S the multiplier i csch(k h0); this q holds the bed point of the anchor
+    % label (see anchor.m) at x = -L, where x_bot puts it and from where b
+    % builds the bed. It vanishes for mirror-symmetric states.
     S     = 1i*kf.*csch(k*h0); S(1) = 0.0;
-    q     = real(ifft(S.*psixJ_hat)); q = q(1);
+    [~, w] = anchor();
+    q     = real(sum(S.*psixJ_hat.*w))/N;
 
     rhs(1:N)     = gam_x.*(TpsiJ - q) - chi_x.*psixJ;
     rhs(N+1:end) = -g*gamma + 0.5*(psi_x.^2 - phi_x.^2)./J + phi_x.*(TpsiJ - q);

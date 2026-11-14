@@ -24,7 +24,7 @@ function v = InitCond ()
     FS   = @(x) a0*cos(k0*(x + L)).*sech((L + x - p0)/D0); % Free surface elevation
     eta0 = FS(x0(Nvec));
     while (err > tol)
-        eta  = [eta0; fliplr(eta0)];
+        eta  = [eta0; flipud(eta0)];
         % the bed under this surface, by the iteration of RHS:
         errb = inf;
         h    = b(xi);
@@ -43,6 +43,6 @@ function v = InitCond ()
     phi        = (g/om)*a0*sin(k0*(x0(Nvec) + L)).*sech((L + x0(Nvec) - p0)/D0).*cosh(k0*(h1 + eta0))*sech(k0*h1);
     v          = zeros(2*N, 1);
     v(1:N)     = eta;
-    v(N+1:end) = [phi; fliplr(phi)];
+    v(N+1:end) = [phi; flipud(phi)];
 
 end % InitCond ()

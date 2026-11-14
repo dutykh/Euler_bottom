@@ -30,15 +30,17 @@ function xf = x (eta, h)
     % h is the depth, so the bed elevation entering the map is -h:
     xf      = xi - real(ifft(T1.*eta_hat - T2.*h_hat));
 
-    %%% The bed abscissas, with the operators of x_bot:
+    %%% The abscissa of the bed point of the anchor label (see anchor.m),
+    %%% with the operators of x_bot:
     B1      = 1i*csch(k*H);
     B1(1)   = 0.0;
     B2      = -1i*coth(k*H);
     B2(1)   = 0.0;
-    xb      = xi - real(ifft(B1.*eta_hat - B2.*h_hat));
+    [s, w]  = anchor();
+    xs      = xi(1) + s - real(sum((B1.*eta_hat - B2.*h_hat).*w))/N;
 
     %%% Remove the drift and put back into the box with the origin of
-    %%% x_bot, which holds the bed point of the first label at x = -L:
-    xf      = xf - xb(1) - L;
+    %%% x_bot, which holds the bed point of the anchor label at x = -L:
+    xf      = xf - xs - L;
 
 end % x ()

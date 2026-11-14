@@ -1,7 +1,7 @@
 %%% -------------------------------------------------- %%%
 %%% Bathymetry function: we use a step at the bottom   %%%
 %%% -------------------------------------------------- %%%
-%%% Last modified: 08/02/2016                          %%%
+%%% Last modified: 14/11/2026                          %%%
 %%% -------------------------------------------------- %%%
 %%% Author: Denys Dutykh, CNRS -- LAMA, Univ of Savoie %%%
 %%% E-mail: Denys.Dutykh@univ-savoie.fr                %%%
@@ -20,6 +20,7 @@ function h = b(x)
     % and the bathymetry:
     x0 = x(Nvec);
     h0 = h1 + (h2 - h1)*(0.5 + 0.5*tanh(Delta*(L + x0 - L1)));
-    h  = [h0; fliplr(h0)];
+    % the second half of the labels holds the mirror image of the first:
+    h  = [h0; flipud(h0)];
     
 end % b()
