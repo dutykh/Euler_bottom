@@ -247,8 +247,8 @@ following the linear group speed of the depth it really computed. Panel (c): the
 version 1.0 about 200 m ahead.
 
 **The published equations.** The transport of version 1.0 was that of the published equations, whose defects are
-corrected as follows; the article carries two further defects, in its bed iteration and on page 114, which the code did
-not share. In the notation of the article, 𝒯_x is its conjugation operator (the operator 𝒞 above, with the short-hand
+corrected as follows; the article carries three further defects, in its equation (4), its bed iteration and on page 114,
+which the code did not share. In the notation of the article, 𝒯_x is its conjugation operator (the operator 𝒞 above, with the short-hand
 𝒯_x[a] = 𝒯_x[a, 0]), m(·) the mean over a period, y and h the elevations of the free surface and of the bed in the
 conformal variables, ϕ the potential, φ = ϕ − 𝒰ξ its periodic part and 𝒰 the mean current; its q(t) is the negative of
 the q of the code. Equations (21) and (22) hold for any q(t), but
