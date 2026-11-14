@@ -1,0 +1,48 @@
+# Dr. Denys Dutykh (Mathematics Department, Khalifa University of Science and Technology, Abu Dhabi, UAE)
+cff-version: 1.2.0
+message: "If you use this code, please cite the article given under preferred-citation."
+title: "Euler_bottom: water waves over a variable bed by conformal mapping"
+type: software
+authors:
+  - family-names: Dutykh
+    given-names: Denys
+    affiliation: "Khalifa University of Science and Technology"
+    orcid: "https://orcid.org/0000-0001-5247-2788"
+repository-code: "https://github.com/dutykh/Euler_bottom"
+license: GPL-3.0-only
+version: 2.0.0
+date-released: "2026-11-14"
+keywords:
+  - water-waves
+  - nonlinear-waves
+  - free-surface-flow
+  - euler-equations
+  - bathymetry
+  - conformal-mapping
+  - pseudo-spectral
+  - numerical-methods
+  - fluid-dynamics
+  - matlab
+abstract: >-
+  MATLAB code solving the full Euler equations of irrotational surface gravity waves over a bed of variable depth.
+  The fluid layer is mapped conformally onto a strip, the bed under the waves is found by fixed-point iterations, and
+  the evolution equations in conformal variables are solved by a Fourier pseudo-spectral method with an adaptive time
+  integrator. Version 2.0.0 corrects the evolution equations of version 1.0, which were those of the published article
+  (the elevation and the potential are now transported with one tangential velocity), the sign of the bed in the map,
+  and the periodic extension of the bed, now a mirror image.
+preferred-citation:
+  type: article
+  title: "The Conformal-Mapping Method for Surface Gravity Waves in the Presence of Variable Bathymetry and Mean Current"
+  authors:
+    - family-names: Viotti
+      given-names: C.
+    - family-names: Dutykh
+      given-names: D.
+    - family-names: Dias
+      given-names: F.
+  journal: "Procedia IUTAM"
+  volume: 11
+  start: 110
+  end: 118
+  year: 2014
+  doi: "10.1016/j.piutam.2014.01.053"

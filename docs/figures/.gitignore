@@ -1,0 +1,4 @@
+# Dr. Denys Dutykh (Mathematics Department, Khalifa University of Science and Technology, Abu Dhabi, UAE)
+# Data written by example_data.m and frequency_data.m, and the cache of Python.
+*.csv
+__pycache__/
