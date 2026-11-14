@@ -50,11 +50,14 @@ function rhs = RHS (~, v)
 
     psixJ = psi_x./J; psixJ_hat = fft(psixJ);
     TpsiJ = real(ifft(T1.*psixJ_hat));
-    q     = mean(chi_x.*TpsiJ + gam_x.*psixJ);
+    % The tangential velocity of the conformal parametrization is TpsiJ - q,
+    % the same for the elevation and the potential. The bed point of label
+    % xi moves with horizontal velocity (S*psixJ - q) times d(xb)/dxi, with
+    % S the multiplier i csch(k h0); this q holds the bed point of label
+    % xi(1) at x = -L, where x_bot puts it and from where b builds the bed.
+    S     = 1i*kf.*csch(k*h0); S(1) = 0.0;
+    q     = real(ifft(S.*psixJ_hat)); q = q(1);
 
-    % The tangential velocity of the conformal parametrization is TpsiJ - q:
-    % then the mean of x_t vanishes and the horizontal origin stays fixed.
-    % The same velocity transports both the elevation and the potential.
     rhs(1:N)     = gam_x.*(TpsiJ - q) - chi_x.*psixJ;
     rhs(N+1:end) = -g*gamma + 0.5*(psi_x.^2 - phi_x.^2)./J + phi_x.*(TpsiJ - q);
 
