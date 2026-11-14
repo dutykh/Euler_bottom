@@ -19,7 +19,6 @@ format longE
 addpath odebar/
 addpath methods/
 addpath problem/
-addpath export_fig/
 
 % enable FFTW library
 fftw('planner', 'hybrid');
