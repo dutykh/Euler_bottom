@@ -1,7 +1,7 @@
 %%% -------------------------------------------------- %%%
 %%% RHS of full Euler equations in a conformal domain  %%%
 %%% -------------------------------------------------- %%%
-%%% Last modified: 09/02/2016                          %%%
+%%% Last modified: 14/11/2026                          %%%
 %%% -------------------------------------------------- %%%
 %%% Author: Denys Dutykh, CNRS -- LAMA, Univ of Savoie %%%
 %%% E-mail: Denys.Dutykh@univ-savoie.fr                %%%
@@ -30,7 +30,7 @@ function rhs = RHS (~, v)
         xb  = x_bot(gamma, h);
         h1  = b(xb);
         err = norm(h1 - h, inf);
-        h   = h1
+        h   = h1;
     end % while ()
 
     h_hat = fft(h);
@@ -51,7 +51,10 @@ function rhs = RHS (~, v)
     TpsiJ = real(ifft(T1.*psixJ_hat));
     q     = mean(chi_x.*TpsiJ + gam_x.*psixJ);
 
-    rhs(1:N)     = gam_x.*(TpsiJ + q) - chi_x.*psixJ;
-    rhs(N+1:end) = -g*gamma + 0.5*(psi_x.^2 - phi_x.^2)./J + phi_x.*TpsiJ;
+    % The tangential velocity of the conformal parametrization is TpsiJ - q:
+    % then the mean of x_t vanishes and the horizontal origin stays fixed.
+    % The same velocity transports both the elevation and the potential.
+    rhs(1:N)     = gam_x.*(TpsiJ - q) - chi_x.*psixJ;
+    rhs(N+1:end) = -g*gamma + 0.5*(psi_x.^2 - phi_x.^2)./J + phi_x.*(TpsiJ - q);
 
 end % RHS ()
