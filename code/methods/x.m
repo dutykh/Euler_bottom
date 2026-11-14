@@ -1,7 +1,7 @@
 %%% -------------------------------------------------- %%%
 %%% Recover the horizontal coorinate on the free surf  %%%
 %%% -------------------------------------------------- %%%
-%%% Last modified: 08/02/2016                          %%%
+%%% Last modified: 14/11/2026                          %%%
 %%% -------------------------------------------------- %%%
 %%% Author: Denys Dutykh, CNRS -- LAMA, Univ of Savoie %%%
 %%% E-mail: Denys.Dutykh@univ-savoie.fr                %%%
@@ -27,7 +27,8 @@ function xf = x (eta, h)
     T2      = -1i*csch(k*H);
     T2(1)   = 0.0;
 
-    xf      = xi - real(ifft(T1.*eta_hat + T2.*h_hat));
+    % h is the depth, so the bed elevation entering the map is -h:
+    xf      = xi - real(ifft(T1.*eta_hat - T2.*h_hat));
     %%% Remove the drift and put back into the box:
     xf      = xf - xf(1) - L;
 

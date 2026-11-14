@@ -40,7 +40,8 @@ function rhs = RHS (~, v)
     T2    = -1i*kf.*csch(k*h0); T2(1) = 0.0;
 
     gam_x = real(ifft(1i*kf.*k.*gam_hat));
-    chi_x = 1 - real(ifft(1i*kf.*k.*(T1.*gam_hat + T2.*h_hat)));
+    % h is the depth, so the bed elevation entering the map is -h:
+    chi_x = 1 - real(ifft(1i*kf.*k.*(T1.*gam_hat - T2.*h_hat)));
     J     = chi_x.^2 + gam_x.^2;
     J_hat = fft(J);
     J     = real(ifft(kf.*J_hat));

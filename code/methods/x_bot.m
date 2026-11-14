@@ -1,7 +1,7 @@
 %%% -------------------------------------------------- %%%
 %%% Recover the horizontal coordinate on the bottom    %%%
 %%% -------------------------------------------------- %%%
-%%% Last modified: 08/02/2016                          %%%
+%%% Last modified: 14/11/2026                          %%%
 %%% -------------------------------------------------- %%%
 %%% Author: Denys Dutykh, CNRS -- LAMA, Univ of Savoie %%%
 %%% E-mail: Denys.Dutykh@univ-savoie.fr                %%%
@@ -27,7 +27,8 @@ function xb = x_bot (eta, h)
     T2      = -1i*coth(k*H);
     T2(1)   = 0.0;
     
-    xb      = xi - real(ifft(T1.*eta_hat + T2.*h_hat));
+    % h is the depth, so the bed elevation entering the map is -h:
+    xb      = xi - real(ifft(T1.*eta_hat - T2.*h_hat));
     %%% Remove the drift and put back into the box:
     xb      = xb - xb(1) - L;
     
