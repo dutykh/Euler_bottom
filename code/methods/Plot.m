@@ -1,7 +1,7 @@
 %%% -------------------------------------------------- %%%
 %%% Plotting function to display the solution          %%%
 %%% -------------------------------------------------- %%%
-%%% Last modified: 09/02/2016                          %%%
+%%% Last modified: 14/11/2026                          %%%
 %%% -------------------------------------------------- %%%
 %%% Author: Denys Dutykh, CNRS -- LAMA, Univ of Savoie %%%
 %%% E-mail: Denys.Dutykh@univ-savoie.fr                %%%
@@ -13,33 +13,42 @@
 function Plot (v, t)
 
     % Global variables:
-    global a0 g kf xi L Nvec N N2
+    global a0 g kf tol xi L Nvec N N2
 
     % retrieve the free surface elevation
     eta0 = v(Nvec);
     phi0 = v(N + Nvec);
 
-    xf = x(v(1:N), b(xi));
-    xf = xf(Nvec);
+    % the bed as the solver computes it, by the iteration of RHS:
+    err = inf;
+    h   = b(xi);
+    while (err > tol)
+        xb  = x_bot(v(1:N), h);
+        h1  = b(xb);
+        err = norm(h1 - h, inf);
+        h   = h1;
+    end % while ()
 
-    xb = x_bot(v(1:N), b(xi));
-    h0 = b(x_bot(v(1:N), b(xb)));
+    % abscissas of the surface and bed points, and the depth at the latter:
+    xf = x(v(1:N), h);
+    xf = xf(Nvec);
+    xb = x_bot(v(1:N), h);
     xb = xb(Nvec);
+    hb = h(Nvec);
 
     % We plot the free surface elevation:
     subplot(4,1,1)
     p1 = plot(xf + L, eta0, 'LineWidth', 1.2); grid off, hold on
-    hb = b(xb); hb = hb(Nvec);
     p2 = plot(xb + L, -hb, 'k-', 'LineWidth', 1.2); hold on
 
     opts = {'EdgeColor', 'none', 'FaceColor', [0.75 0.75 0.75]};
-    fill_between(xb + L, min(-h0)*ones(size(xb)), -hb, 1, opts{:}); hold on
+    fill_between(xb + L, min(-h)*ones(size(xb)), -hb, 1, opts{:}); hold on
 
     opts = {'EdgeColor', 'none', 'FaceColor', [64 179 255]/255, 'FaceAlpha', 0.5};
     hf   = b(xf);
     fill_between(xf + L, -hf(Nvec), eta0, 1, opts{:}); hold off
 
-    xlim([0.0; L]); ylim([min(-h0)-1.0; 1.0+2.0*a0]);
+    xlim([0.0; L]); ylim([min(-h)-1.0; 1.0+2.0*a0]);
     xlabel('$x$', 'interpreter', 'latex', 'fontsize', 14);
     ylabel('$\eta(x,t)$', 'interpreter', 'latex', 'fontsize', 14);
     legend([p1, p2], {'Free surface', 'Bottom profile'},...
